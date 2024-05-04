@@ -1,9 +1,11 @@
 package com.example.usuariosms.service;
 
+import com.example.usuariosms.fixture.RegistrarEnderecoRequestFixture;
 import com.example.usuariosms.fixture.RegistrarUsuarioRequestFixture;
 import com.example.usuariosms.fixture.UsuarioFixture;
 import com.example.usuariosms.mapper.UsuarioRegistrarUsuarioRequestMapper;
 import com.example.usuariosms.model.Usuario;
+import com.example.usuariosms.model.dto.RegistrarEnderecoRequest;
 import com.example.usuariosms.model.dto.RegistrarUsuarioRequest;
 import com.example.usuariosms.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UsuarioServiceTest {
+class UsuarioServiceTest {
 
     @InjectMocks
     private UsuarioService usuarioService;

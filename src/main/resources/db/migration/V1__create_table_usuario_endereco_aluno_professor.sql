@@ -25,33 +25,15 @@ CREATE TABLE usuario (
 
 CREATE TABLE aluno (
     id UUID PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    sobrenome VARCHAR(100) NOT NULL,
-    cpf VARCHAR(11) NOT NULL UNIQUE,
-    senha VARCHAR(500) NOT NULL,
-    papel VARCHAR(50) NOT NULL,
-    data_nascimento DATE NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    celular VARCHAR(16) NOT NULL UNIQUE,
     matricula UUID NOT NULL UNIQUE,
-    endereco_id BIGINT NOT NULL,
-    FOREIGN KEY (endereco_id) REFERENCES endereco(id)
+    FOREIGN KEY (id) REFERENCES usuario(id)
 );
 
 CREATE TABLE professor (
     id UUID PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    sobrenome VARCHAR(100) NOT NULL,
-    cpf VARCHAR(11) NOT NULL UNIQUE,
-    senha VARCHAR(500) NOT NULL,
-    papel VARCHAR(50) NOT NULL,
-    data_nascimento DATE NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    celular VARCHAR(16) NOT NULL UNIQUE,
     numero_ctps VARCHAR(10) NOT NULL,
     serie_ctps VARCHAR(10) NOT NULL,
     numero_pis VARCHAR(11) NOT NULL,
     remuneracao DOUBLE PRECISION NOT NULL,
-    endereco_id BIGINT NOT NULL,
-    FOREIGN KEY (endereco_id) REFERENCES endereco(id)
+    FOREIGN KEY (id) REFERENCES usuario(id)
 );

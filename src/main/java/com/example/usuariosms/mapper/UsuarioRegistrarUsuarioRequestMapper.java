@@ -4,7 +4,7 @@ import com.example.usuariosms.model.Usuario;
 import com.example.usuariosms.model.dto.RegistrarUsuarioRequest;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UsuarioRegistrarUsuarioRequestMapper {
 
     Usuario registrarUsuarioRequestToUsuario(RegistrarUsuarioRequest registrarUsuarioRequest);

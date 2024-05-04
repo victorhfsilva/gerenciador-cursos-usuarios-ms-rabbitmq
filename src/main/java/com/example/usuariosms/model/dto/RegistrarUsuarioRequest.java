@@ -39,7 +39,9 @@ public record RegistrarUsuarioRequest (
 
     @NotBlank
     @Size(max = 16)
-    String celular
+    String celular,
+
+    RegistrarEnderecoRequest endereco
 ){
 
 }

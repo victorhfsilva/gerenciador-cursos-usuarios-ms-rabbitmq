@@ -20,7 +20,8 @@ public interface RegistrarUsuarioRequestFixture {
                 .papel(Papel.ADMIN)
                 .dataNascimento(LocalDate.of(2000, 6, 6))
                 .email("joaobsilva@email.com")
-                .celular("11999998888");
+                .celular("11999998888")
+                .endereco(RegistrarEnderecoRequestFixture.buildValido());
     }
 
 }
