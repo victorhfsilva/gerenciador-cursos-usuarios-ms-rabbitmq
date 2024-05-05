@@ -19,12 +19,12 @@ import java.util.UUID;
 @ToString
 public class Aluno extends Usuario {
 
-    @Column(nullable = false, unique = true)
-    private UUID matricula;
+    @Column(nullable = false, unique = true, length = 16)
+    private String idEstudantil;
 
     @Builder(builderMethodName = "alunoBuilder")
-    public Aluno(UUID id, String nome, String sobrenome, String cpf, String senha, Papel papel, LocalDate dataNascimento, String email, String celular, Endereco endereco, UUID matricula) {
+    public Aluno(UUID id, String nome, String sobrenome, String cpf, String senha, Papel papel, LocalDate dataNascimento, String email, String celular, Endereco endereco, String idEstudantil) {
         super(id, nome, sobrenome, cpf, senha, papel, dataNascimento, email, celular, endereco);
-        this.matricula = matricula;
+        this.idEstudantil = idEstudantil;
     }
 }
