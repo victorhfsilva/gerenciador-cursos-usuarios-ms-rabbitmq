@@ -1,12 +1,13 @@
 package com.example.usuariosms.service;
 
-import com.example.usuariosms.fixture.RegistrarUsuarioRequestFixture;
+import com.example.usuariosms.fixture.UsuarioRequestFixture;
 import com.example.usuariosms.fixture.UsuarioFixture;
 import com.example.usuariosms.fixture.UsuarioResourceFixture;
-import com.example.usuariosms.mapper.UsuarioRegistrarUsuarioRequestMapper;
+import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
+import com.example.usuariosms.mapper.UsuarioUsuarioRequestMapper;
 import com.example.usuariosms.mapper.UsuarioUsuarioResourceMapper;
 import com.example.usuariosms.model.Usuario;
-import com.example.usuariosms.model.dto.RegistrarUsuarioRequest;
+import com.example.usuariosms.model.dto.UsuarioRequest;
 import com.example.usuariosms.model.resources.UsuarioResource;
 import com.example.usuariosms.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
@@ -27,35 +28,53 @@ class UsuarioServiceTest {
 
     @InjectMocks
     private UsuarioService usuarioService;
-
     @Mock
     private UsuarioRepository usuarioRepository;
-
     @Mock
     private UsuarioUsuarioResourceMapper usuarioUsuarioResourceMapper;
     @Mock
-    private UsuarioRegistrarUsuarioRequestMapper usuarioRegistrarUsuarioRequestMapper;
+    private UsuarioUsuarioRequestMapper usuarioUsuarioRequestMapper;
+    @Mock
+    private EnderecoEnderecoRequestMapper enderecoEnderecoRequestMapper;
 
     @Test
-    void salvarUsuarioTest(){
-        RegistrarUsuarioRequest registrarUsuarioRequest = RegistrarUsuarioRequestFixture.buildValido();
+    void saveTest(){
+        UsuarioRequest usuarioRequest = UsuarioRequestFixture.buildValido();
         Usuario usuario = UsuarioFixture.buildValido();
 
-        when(usuarioRegistrarUsuarioRequestMapper.registrarUsuarioRequestToUsuario(registrarUsuarioRequest)).thenReturn(usuario);
+        when(usuarioUsuarioRequestMapper.usuarioRequestToUsuario(usuarioRequest)).thenReturn(usuario);
         when(usuarioRepository.save(any())).thenReturn(usuario);
-        Usuario usuarioSalvo = usuarioService.save(registrarUsuarioRequest);
+        when(usuarioUsuarioResourceMapper.usuarioToUsuarioResource(usuario)).thenReturn(UsuarioResourceFixture.buildValido());
 
-        assertEquals(usuarioSalvo.getCpf(), registrarUsuarioRequest.cpf());
+        UsuarioResource usuarioResource = usuarioService.save(usuarioRequest);
+
+        assertEquals(usuarioResource.getCpf(), usuarioRequest.cpf());
     }
 
     @Test
-    void findByIdShouldReturnUserWhenUserExists() {
+    void findByIdTest() {
         Usuario usuario = UsuarioFixture.buildValido();
         UsuarioResource usuarioResource = UsuarioResourceFixture.buildValido();
 
         when(usuarioRepository.findById(any())).thenReturn(Optional.of(usuario));
         when(usuarioUsuarioResourceMapper.usuarioToUsuarioResource(usuario)).thenReturn(usuarioResource);
         UsuarioResource usuarioRetornado = usuarioService.findById(UUID.randomUUID());
+
+        assertEquals(usuario.getCpf(), usuarioRetornado.getCpf());
+    }
+
+    @Test
+    void updateTest() {
+        Usuario usuario = UsuarioFixture.buildValido();
+        UsuarioRequest usuarioRequest = UsuarioRequestFixture.buildValido();
+        UsuarioResource usuarioResource = UsuarioResourceFixture.buildValido();
+
+        when(usuarioRepository.findById(any())).thenReturn(Optional.of(usuario));
+        when(usuarioRepository.save(any())).thenReturn(usuario);
+        when(enderecoEnderecoRequestMapper.enderecoRequestToEndereco(any())).thenReturn(usuario.getEndereco());
+        when(usuarioUsuarioResourceMapper.usuarioToUsuarioResource(usuario)).thenReturn(usuarioResource);
+
+        UsuarioResource usuarioRetornado = usuarioService.update(UUID.randomUUID(), usuarioRequest);
 
         assertEquals(usuario.getCpf(), usuarioRetornado.getCpf());
     }

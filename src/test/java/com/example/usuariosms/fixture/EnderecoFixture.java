@@ -1,7 +1,6 @@
 package com.example.usuariosms.fixture;
 
 import com.example.usuariosms.model.Endereco;
-import com.example.usuariosms.model.dto.RegistrarEnderecoRequest;
 import com.example.usuariosms.model.enums.Estado;
 
 public interface EnderecoFixture {
@@ -10,7 +9,7 @@ public interface EnderecoFixture {
         return builder().build();
     }
 
-    static Endereco.EnderecoBuilder builder() {
+   private static Endereco.EnderecoBuilder builder() {
         return Endereco.builder()
                 .id(1L)
                 .cep("12345678")

@@ -11,7 +11,7 @@ public interface UsuarioResourceFixture {
     static UsuarioResource buildValido() {
         return builder().build();
     }
-    static UsuarioResource.UsuarioResourceBuilder builder() {
+    private static UsuarioResource.UsuarioResourceBuilder builder() {
         return UsuarioResource.builder()
                 .nome("João")
                 .sobrenome("Bezerra da Silva")

@@ -1,18 +1,18 @@
 package com.example.usuariosms.fixture;
 
-import com.example.usuariosms.model.dto.RegistrarUsuarioRequest;
+import com.example.usuariosms.model.dto.UsuarioRequest;
 import com.example.usuariosms.model.enums.Papel;
 
 import java.time.LocalDate;
 
-public interface RegistrarUsuarioRequestFixture {
+public interface UsuarioRequestFixture {
 
-    static RegistrarUsuarioRequest buildValido() {
+    static UsuarioRequest buildValido() {
         return builder().build();
     }
 
-    static RegistrarUsuarioRequest.RegistrarUsuarioRequestBuilder builder() {
-        return RegistrarUsuarioRequest.builder()
+    private static UsuarioRequest.UsuarioRequestBuilder builder() {
+        return UsuarioRequest.builder()
                 .nome("João")
                 .sobrenome("Bezerra da Silva")
                 .cpf("78664841209")
@@ -21,7 +21,7 @@ public interface RegistrarUsuarioRequestFixture {
                 .dataNascimento(LocalDate.of(2000, 6, 6))
                 .email("joaobsilva@email.com")
                 .celular("11999998888")
-                .endereco(RegistrarEnderecoRequestFixture.buildValido());
+                .endereco(EnderecoRequestFixture.buildValido());
     }
 
 }

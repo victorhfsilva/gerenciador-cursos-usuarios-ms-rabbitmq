@@ -1,16 +1,16 @@
 package com.example.usuariosms.fixture;
 
-import com.example.usuariosms.model.dto.RegistrarEnderecoRequest;
+import com.example.usuariosms.model.dto.EnderecoRequest;
 import com.example.usuariosms.model.enums.Estado;
 
-public interface RegistrarEnderecoRequestFixture {
+public interface EnderecoRequestFixture {
 
-    static RegistrarEnderecoRequest buildValido() {
+    static EnderecoRequest buildValido() {
         return builder().build();
     }
 
-    static RegistrarEnderecoRequest.RegistrarEnderecoRequestBuilder builder() {
-        return RegistrarEnderecoRequest.builder()
+    private static EnderecoRequest.EnderecoRequestBuilder builder() {
+        return EnderecoRequest.builder()
                 .cep("12345678")
                 .logradouro("Rua dos Bobos")
                 .numero("12")

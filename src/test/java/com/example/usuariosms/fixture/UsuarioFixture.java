@@ -1,7 +1,6 @@
 package com.example.usuariosms.fixture;
 
 import com.example.usuariosms.model.Usuario;
-import com.example.usuariosms.model.dto.RegistrarUsuarioRequest;
 import com.example.usuariosms.model.enums.Papel;
 
 import java.time.LocalDate;
@@ -11,7 +10,7 @@ public interface UsuarioFixture {
     static Usuario buildValido() {
         return builder().build();
     }
-    static Usuario.UsuarioBuilder builder() {
+    private static Usuario.UsuarioBuilder builder() {
         return Usuario.builder()
                 .id(UUID.randomUUID())
                 .nome("João")

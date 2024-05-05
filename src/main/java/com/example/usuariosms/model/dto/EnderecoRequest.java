@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 @Builder
-public record RegistrarEnderecoRequest (
+public record EnderecoRequest(
     @NotBlank
     @Size(max = 8)
     String cep,
