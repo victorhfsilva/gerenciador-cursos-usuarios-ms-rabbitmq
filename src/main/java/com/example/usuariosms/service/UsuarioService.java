@@ -9,7 +9,6 @@ import com.example.usuariosms.model.resources.UsuarioResource;
 import com.example.usuariosms.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.UUID;
 
 @Service
@@ -48,16 +47,7 @@ public class UsuarioService {
     public UsuarioResource update(UUID id, UsuarioRequest usuarioDto) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow();
 
-        usuario.setNome(usuarioDto.nome());
-        usuario.setSobrenome(usuarioDto.sobrenome());
-        usuario.setCpf(usuarioDto.cpf());
-        usuario.setSenha(usuarioDto.senha());
-        usuario.setPapel(usuarioDto.papel());
-        usuario.setDataNascimento(usuarioDto.dataNascimento());
-        usuario.setEmail(usuarioDto.email());
-        usuario.setCelular(usuarioDto.celular());
-        usuario.setEndereco(enderecoEnderecoRequestMapper
-                .enderecoRequestToEndereco(usuarioDto.endereco()));
+        atualizarUsuario(usuario, usuarioDto);
 
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
 
@@ -69,6 +59,18 @@ public class UsuarioService {
         return usuarioResource;
     }
 
+    private void atualizarUsuario(Usuario usuario, UsuarioRequest novoUsuario) {
+        usuario.setNome(novoUsuario.nome());
+        usuario.setSobrenome(novoUsuario.sobrenome());
+        usuario.setCpf(novoUsuario.cpf());
+        usuario.setSenha(novoUsuario.senha());
+        usuario.setPapel(novoUsuario.papel());
+        usuario.setDataNascimento(novoUsuario.dataNascimento());
+        usuario.setEmail(novoUsuario.email());
+        usuario.setCelular(novoUsuario.celular());
+        usuario.setEndereco(enderecoEnderecoRequestMapper
+                .enderecoRequestToEndereco(novoUsuario.endereco()));
+    }
 
 
 }
