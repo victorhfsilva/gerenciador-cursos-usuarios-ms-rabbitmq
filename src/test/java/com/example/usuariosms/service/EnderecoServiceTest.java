@@ -11,6 +11,7 @@ import com.example.usuariosms.model.Usuario;
 import com.example.usuariosms.model.dto.EnderecoRequest;
 import com.example.usuariosms.model.resources.EnderecoResource;
 import com.example.usuariosms.repository.UsuarioRepository;
+import com.example.usuariosms.service.impl.EnderecoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -59,7 +60,7 @@ class EnderecoServiceTest {
         when(usuarioRepository.findById(usuario.getId())).thenReturn(Optional.of(usuario));
         when(enderecoEnderecoResourceMapper.enderecoToEnderecoResponse(endereco)).thenReturn(enderecoResource);
 
-        EnderecoResource enderecoRetornado = enderecoService.findById(usuario.getId());
+        EnderecoResource enderecoRetornado = enderecoService.findByUsuarioId(usuario.getId());
         assertEquals(endereco.getCep(), enderecoRetornado.getCep());
     }
 }

@@ -48,6 +48,6 @@ public class Usuario {
     @Column(nullable = false, unique = true, length = 16)
     private String celular;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Endereco endereco;
 }

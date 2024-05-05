@@ -1,14 +1,12 @@
 package com.example.usuariosms.model.resources;
 
 import com.example.usuariosms.model.enums.Estado;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class EnderecoResource extends RepresentationModel<UsuarioResource> {

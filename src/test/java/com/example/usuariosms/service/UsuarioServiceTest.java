@@ -10,6 +10,7 @@ import com.example.usuariosms.model.Usuario;
 import com.example.usuariosms.model.dto.UsuarioRequest;
 import com.example.usuariosms.model.resources.UsuarioResource;
 import com.example.usuariosms.repository.UsuarioRepository;
+import com.example.usuariosms.service.impl.UsuarioService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -73,6 +74,19 @@ class UsuarioServiceTest {
         when(usuarioUsuarioResourceMapper.usuarioToUsuarioResource(usuario)).thenReturn(usuarioResource);
 
         UsuarioResource usuarioRetornado = usuarioService.update(UUID.randomUUID(), usuarioRequest);
+
+        assertEquals(usuario.getCpf(), usuarioRetornado.getCpf());
+    }
+
+    @Test
+    void deleteTest() {
+        Usuario usuario = UsuarioFixture.buildValido();
+        UsuarioResource usuarioResource = UsuarioResourceFixture.buildValido();
+
+        when(usuarioRepository.findById(any())).thenReturn(Optional.of(usuario));
+        when(usuarioUsuarioResourceMapper.usuarioToUsuarioResource(usuario)).thenReturn(usuarioResource);
+
+        UsuarioResource usuarioRetornado = usuarioService.delete(UUID.randomUUID());
 
         assertEquals(usuario.getCpf(), usuarioRetornado.getCpf());
     }
