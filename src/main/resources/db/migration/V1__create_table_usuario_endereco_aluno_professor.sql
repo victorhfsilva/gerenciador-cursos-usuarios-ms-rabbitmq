@@ -25,7 +25,7 @@ CREATE TABLE usuario (
 
 CREATE TABLE aluno (
     id UUID PRIMARY KEY,
-    matricula UUID NOT NULL UNIQUE,
+    id_Estudantil VARCHAR(16) NOT NULL UNIQUE,
     FOREIGN KEY (id) REFERENCES usuario(id)
 );
 

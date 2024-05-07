@@ -6,8 +6,10 @@ import com.example.usuariosms.service.impl.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.CollectionModel;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,36 +22,41 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @AllArgsConstructor
 public class UsuarioController {
 
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
+    private PagedResourcesAssembler<UsuarioResource> pagedResourcesAssembler;
 
     @GetMapping("/{id}")
-    public EntityModel<UsuarioResource> buscarUsuarioPorId(@PathVariable UUID id) {
+    public ResponseEntity<EntityModel<UsuarioResource>> buscarUsuarioPorId(@PathVariable UUID id) {
         UsuarioResource usuarioResource = usuarioService.findById(id);
-        return EntityModel.of(usuarioResource);
+        return ResponseEntity.ok().body(EntityModel.of(usuarioResource));
     }
 
     @GetMapping
-    public CollectionModel<UsuarioResource> buscarTodosUsuarios(Pageable pageable){
+    public ResponseEntity<PagedModel<EntityModel<UsuarioResource>>> buscarTodosUsuarios(Pageable pageable){
         Page<UsuarioResource> usuarioResources = usuarioService.findAll(pageable);
-        return CollectionModel.of(usuarioResources, linkTo(methodOn(UsuarioController.class).buscarTodosUsuarios(pageable)).withSelfRel());
+        PagedModel<EntityModel<UsuarioResource>> pagedModel = pagedResourcesAssembler
+                .toModel(usuarioResources, linkTo(methodOn(UsuarioController.class)
+                        .buscarTodosUsuarios(pageable))
+                        .withSelfRel());
+        return ResponseEntity.ok().body(pagedModel);
     }
 
     @PostMapping
-    public EntityModel<UsuarioResource> registrarUsuario(@RequestBody UsuarioRequest usuarioDto) {
+    public ResponseEntity<EntityModel<UsuarioResource>> registrarUsuario(@RequestBody UsuarioRequest usuarioDto) {
         UsuarioResource usuarioResource = usuarioService.save(usuarioDto);
-        return EntityModel.of(usuarioResource);
+        return ResponseEntity.created(null).body(EntityModel.of(usuarioResource));
     }
 
     @PutMapping("/{id}")
-    public EntityModel<UsuarioResource> atualizarUsuario(@PathVariable UUID id, @RequestBody UsuarioRequest usuarioDto) {
+    public ResponseEntity<EntityModel<UsuarioResource>> atualizarUsuario(@PathVariable UUID id, @RequestBody UsuarioRequest usuarioDto) {
         UsuarioResource usuarioResource = usuarioService.update(id, usuarioDto);
-        return EntityModel.of(usuarioResource);
+        return ResponseEntity.ok().body(EntityModel.of(usuarioResource));
     }
 
     @DeleteMapping("/{id}")
-    public EntityModel<UsuarioResource> deletarUsuario(@PathVariable UUID id) {
+    public ResponseEntity<EntityModel<UsuarioResource>> deletarUsuario(@PathVariable UUID id) {
         UsuarioResource usuarioResource = usuarioService.delete(id);
-        return EntityModel.of(usuarioResource);
+        return ResponseEntity.ok().body(EntityModel.of(usuarioResource));
     }
 
 }
