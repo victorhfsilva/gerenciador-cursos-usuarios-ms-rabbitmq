@@ -16,9 +16,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.*;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -48,6 +52,8 @@ class UsuarioServiceTest {
         UsuarioResource usuarioResource = usuarioService.save(usuarioRequest);
 
         assertEquals(usuarioResource.getCpf(), usuarioRequest.cpf());
+        assertNotNull(usuarioResource.getLink("self"));
+        assertNotNull(usuarioResource.getLink("endereco"));
     }
 
     @Test
@@ -60,6 +66,28 @@ class UsuarioServiceTest {
         UsuarioResource usuarioRetornado = usuarioService.findById(UUID.randomUUID());
 
         assertEquals(usuario.getCpf(), usuarioRetornado.getCpf());
+        assertNotNull(usuarioRetornado.getLink("self"));
+        assertNotNull(usuarioRetornado.getLink("endereco"));
+    }
+
+    @Test
+    public void testFindAll() {
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Usuario> usuarios = List.of(UsuarioFixture.buildValido());
+        Page<Usuario> paginaUsuarios = new PageImpl<>(usuarios, pageable, usuarios.size());
+        UsuarioResource usuarioResource = UsuarioResourceFixture.buildValido();
+
+        when(usuarioRepository.findAll(pageable)).thenReturn(paginaUsuarios);
+        when(usuarioUsuarioResourceMapper.usuarioToUsuarioResource(any(Usuario.class)))
+                .thenReturn(usuarioResource);
+
+        Page<UsuarioResource> paginaUsuariosRetornada = usuarioService.findAll(pageable);
+
+        assertEquals(paginaUsuarios.getTotalElements(), paginaUsuariosRetornada.getTotalElements());
+        assertEquals(paginaUsuarios.getTotalPages(), paginaUsuariosRetornada.getTotalPages());
+        assertEquals(paginaUsuarios.getContent().size(), paginaUsuariosRetornada.getContent().size());
+        assertNotNull(paginaUsuariosRetornada.getContent().get(0).getLink("self"));
+        assertNotNull(paginaUsuariosRetornada.getContent().get(0).getLink("endereco"));
     }
 
     @Test
@@ -76,6 +104,8 @@ class UsuarioServiceTest {
         UsuarioResource usuarioRetornado = usuarioService.update(UUID.randomUUID(), usuarioRequest);
 
         assertEquals(usuario.getCpf(), usuarioRetornado.getCpf());
+        assertNotNull(usuarioRetornado.getLink("self"));
+        assertNotNull(usuarioRetornado.getLink("endereco"));
     }
 
     @Test
@@ -89,6 +119,8 @@ class UsuarioServiceTest {
         UsuarioResource usuarioRetornado = usuarioService.delete(UUID.randomUUID());
 
         assertEquals(usuario.getCpf(), usuarioRetornado.getCpf());
+        assertNotNull(usuarioRetornado.getLink("self"));
+        assertNotNull(usuarioRetornado.getLink("endereco"));
     }
 
 }
