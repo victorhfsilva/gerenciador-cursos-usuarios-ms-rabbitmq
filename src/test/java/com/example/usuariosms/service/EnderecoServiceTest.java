@@ -45,7 +45,7 @@ class EnderecoServiceTest {
 
         when(enderecoEnderecoRequestMapper.enderecoRequestToEndereco(enderecoRequest)).thenReturn(endereco);
         when(usuarioRepository.findById(usuario.getId())).thenReturn(Optional.of(usuario));
-        when(enderecoEnderecoResourceMapper.enderecoToEnderecoResponse(any())).thenReturn(enderecoResource);
+        when(enderecoEnderecoResourceMapper.enderecoToEnderecoResponse(any(Endereco.class))).thenReturn(enderecoResource);
 
         EnderecoResource enderecoRetornado = enderecoService.update(usuario.getId(), enderecoRequest);
         assertEquals(enderecoRequest.cep(), enderecoRetornado.getCep());

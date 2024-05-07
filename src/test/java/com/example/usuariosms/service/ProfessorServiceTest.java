@@ -7,6 +7,7 @@ import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
 import com.example.usuariosms.mapper.ProfessorProfessorRequestMapper;
 import com.example.usuariosms.mapper.ProfessorProfessorResourceMapper;
 import com.example.usuariosms.model.Professor;
+import com.example.usuariosms.model.dto.EnderecoRequest;
 import com.example.usuariosms.model.dto.ProfessorRequest;
 import com.example.usuariosms.model.resources.ProfessorResource;
 import com.example.usuariosms.repository.ProfessorRepository;
@@ -50,7 +51,7 @@ public class ProfessorServiceTest {
         Professor professor = ProfessorFixture.buildValido();
 
         when(professorProfessorRequestMapper.professorRequestToProfessor(professorRequest)).thenReturn(professor);
-        when(professorRepository.save(any())).thenReturn(professor);
+        when(professorRepository.save(any(Professor.class))).thenReturn(professor);
         when(professorProfessorResourceMapper.professorToProfessorResource(professor)).thenReturn(ProfessorResourceFixture.buildValido());
 
         ProfessorResource professorResource = professorService.save(professorRequest);
@@ -65,7 +66,7 @@ public class ProfessorServiceTest {
         Professor professor = ProfessorFixture.buildValido();
         ProfessorResource professorResource = ProfessorResourceFixture.buildValido();
 
-        when(professorRepository.findById(any())).thenReturn(Optional.of(professor));
+        when(professorRepository.findById(any(UUID.class))).thenReturn(Optional.of(professor));
         when(professorProfessorResourceMapper.professorToProfessorResource(professor)).thenReturn(professorResource);
         ProfessorResource professorRetornado = professorService.findById(UUID.randomUUID());
 
@@ -100,9 +101,9 @@ public class ProfessorServiceTest {
         ProfessorRequest professorRequest = ProfessorRequestFixture.buildValido();
         ProfessorResource professorResource = ProfessorResourceFixture.buildValido();
 
-        when(professorRepository.findById(any())).thenReturn(Optional.of(professor));
-        when(professorRepository.save(any())).thenReturn(professor);
-        when(enderecoEnderecoRequestMapper.enderecoRequestToEndereco(any())).thenReturn(professor.getEndereco());
+        when(professorRepository.findById(any(UUID.class))).thenReturn(Optional.of(professor));
+        when(professorRepository.save(any(Professor.class))).thenReturn(professor);
+        when(enderecoEnderecoRequestMapper.enderecoRequestToEndereco(any(EnderecoRequest.class))).thenReturn(professor.getEndereco());
         when(professorProfessorResourceMapper.professorToProfessorResource(professor)).thenReturn(professorResource);
 
         ProfessorResource professorRetornado = professorService.update(UUID.randomUUID(), professorRequest);
@@ -117,7 +118,7 @@ public class ProfessorServiceTest {
         Professor professor = ProfessorFixture.buildValido();
         ProfessorResource professorResource = ProfessorResourceFixture.buildValido();
 
-        when(professorRepository.findById(any())).thenReturn(Optional.of(professor));
+        when(professorRepository.findById(any(UUID.class))).thenReturn(Optional.of(professor));
         when(professorProfessorResourceMapper.professorToProfessorResource(professor)).thenReturn(professorResource);
 
         ProfessorResource professorRetornado = professorService.delete(UUID.randomUUID());

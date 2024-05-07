@@ -8,6 +8,7 @@ import com.example.usuariosms.mapper.AlunoAlunoRequestMapper;
 import com.example.usuariosms.mapper.AlunoAlunoResourceMapper;
 import com.example.usuariosms.model.Aluno;
 import com.example.usuariosms.model.dto.AlunoRequest;
+import com.example.usuariosms.model.dto.EnderecoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
 import com.example.usuariosms.repository.AlunoRepository;
 import com.example.usuariosms.service.impl.AlunoService;
@@ -49,7 +50,7 @@ public class AlunoServiceTest {
         Aluno aluno = AlunoFixture.buildValido();
 
         when(alunoAlunoRequestMapper.alunoRequestToAluno(alunoRequest)).thenReturn(aluno);
-        when(alunoRepository.save(any())).thenReturn(aluno);
+        when(alunoRepository.save(any(Aluno.class))).thenReturn(aluno);
         when(alunoAlunoResourceMapper.alunoToAlunoResource(aluno)).thenReturn(AlunoResourceFixture.buildValido());
 
         AlunoResource alunoResource = alunoService.save(alunoRequest);
@@ -64,7 +65,7 @@ public class AlunoServiceTest {
         Aluno aluno = AlunoFixture.buildValido();
         AlunoResource alunoResource = AlunoResourceFixture.buildValido();
 
-        when(alunoRepository.findById(any())).thenReturn(Optional.of(aluno));
+        when(alunoRepository.findById(any(UUID.class))).thenReturn(Optional.of(aluno));
         when(alunoAlunoResourceMapper.alunoToAlunoResource(aluno)).thenReturn(alunoResource);
         AlunoResource alunoRetornado = alunoService.findById(UUID.randomUUID());
 
@@ -99,9 +100,9 @@ public class AlunoServiceTest {
         AlunoRequest alunoRequest = AlunoRequestFixture.buildValido();
         AlunoResource alunoResource = AlunoResourceFixture.buildValido();
 
-        when(alunoRepository.findById(any())).thenReturn(Optional.of(aluno));
-        when(alunoRepository.save(any())).thenReturn(aluno);
-        when(enderecoEnderecoRequestMapper.enderecoRequestToEndereco(any())).thenReturn(aluno.getEndereco());
+        when(alunoRepository.findById(any(UUID.class))).thenReturn(Optional.of(aluno));
+        when(alunoRepository.save(any(Aluno.class))).thenReturn(aluno);
+        when(enderecoEnderecoRequestMapper.enderecoRequestToEndereco(any(EnderecoRequest.class))).thenReturn(aluno.getEndereco());
         when(alunoAlunoResourceMapper.alunoToAlunoResource(aluno)).thenReturn(alunoResource);
 
         AlunoResource alunoRetornado = alunoService.update(UUID.randomUUID(), alunoRequest);
@@ -116,7 +117,7 @@ public class AlunoServiceTest {
         Aluno aluno = AlunoFixture.buildValido();
         AlunoResource alunoResource = AlunoResourceFixture.buildValido();
 
-        when(alunoRepository.findById(any())).thenReturn(Optional.of(aluno));
+        when(alunoRepository.findById(any(UUID.class))).thenReturn(Optional.of(aluno));
         when(alunoAlunoResourceMapper.alunoToAlunoResource(aluno)).thenReturn(alunoResource);
 
         AlunoResource alunoRetornado = alunoService.delete(UUID.randomUUID());
