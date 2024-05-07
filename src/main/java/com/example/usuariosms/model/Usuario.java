@@ -17,6 +17,7 @@ import java.util.UUID;
 @Builder
 @EqualsAndHashCode
 @ToString
+@Table(name = "usuarios")
 public class Usuario {
 
     @Id

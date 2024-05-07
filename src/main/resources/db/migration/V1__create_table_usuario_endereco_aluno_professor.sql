@@ -1,4 +1,4 @@
-CREATE TABLE endereco (
+CREATE TABLE enderecos (
     id BIGSERIAL PRIMARY KEY,
     cep VARCHAR(8) NOT NULL,
     numero VARCHAR(10) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE endereco (
     estado VARCHAR(2) NOT NULL
 );
 
-CREATE TABLE usuario (
+CREATE TABLE usuarios (
     id UUID PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     sobrenome VARCHAR(100) NOT NULL,
@@ -20,20 +20,20 @@ CREATE TABLE usuario (
     email VARCHAR(100) NOT NULL UNIQUE,
     celular VARCHAR(16) NOT NULL UNIQUE,
     endereco_id BIGINT NOT NULL,
-    FOREIGN KEY (endereco_id) REFERENCES endereco(id)
+    FOREIGN KEY (endereco_id) REFERENCES enderecos(id)
 );
 
-CREATE TABLE aluno (
+CREATE TABLE alunos (
     id UUID PRIMARY KEY,
     id_Estudantil VARCHAR(16) NOT NULL UNIQUE,
-    FOREIGN KEY (id) REFERENCES usuario(id)
+    FOREIGN KEY (id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE professor (
+CREATE TABLE professores (
     id UUID PRIMARY KEY,
     numero_ctps VARCHAR(10) NOT NULL,
     serie_ctps VARCHAR(10) NOT NULL,
     numero_pis VARCHAR(11) NOT NULL,
     remuneracao DOUBLE PRECISION NOT NULL,
-    FOREIGN KEY (id) REFERENCES usuario(id)
+    FOREIGN KEY (id) REFERENCES usuarios(id)
 );

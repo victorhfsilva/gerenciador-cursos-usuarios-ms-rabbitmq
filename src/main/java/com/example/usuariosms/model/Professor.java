@@ -1,10 +1,7 @@
 package com.example.usuariosms.model;
 
 import com.example.usuariosms.model.enums.Papel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString
+@Table(name = "professores")
 public class Professor extends Usuario {
 
     @Column(name = "numero_ctps", nullable = false, length = 10)

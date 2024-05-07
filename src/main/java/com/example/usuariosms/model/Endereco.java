@@ -13,6 +13,7 @@ import lombok.*;
 @Builder
 @EqualsAndHashCode(exclude = "usuario")
 @ToString(exclude = "usuario")
+@Table(name = "enderecos")
 public class Endereco {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
