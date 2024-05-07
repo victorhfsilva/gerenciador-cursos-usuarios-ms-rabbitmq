@@ -13,6 +13,7 @@ public interface UsuarioResourceFixture {
     }
     private static UsuarioResource.UsuarioResourceBuilder builder() {
         return UsuarioResource.builder()
+                .id(UUID.randomUUID())
                 .nome("João")
                 .sobrenome("Bezerra da Silva")
                 .cpf("78664841209")
