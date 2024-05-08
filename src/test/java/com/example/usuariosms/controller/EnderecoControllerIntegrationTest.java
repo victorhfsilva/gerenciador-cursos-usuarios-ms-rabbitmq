@@ -53,12 +53,12 @@ public class EnderecoControllerIntegrationTest {
     void atualizarEnderecoTest() {
 
         EnderecoResource enderecoResource = EnderecoResourceFixture.buildValido();
-        HttpEntity<EnderecoResource> request = new HttpEntity<>(enderecoResource);
+        HttpEntity<EnderecoResource> requisicao = new HttpEntity<>(enderecoResource);
 
         ResponseEntity<EnderecoResource> resposta = restTemplate
                 .exchange("http://localhost:" + port + "/enderecos/38bbaa9d-4b9b-4efb-9bd7-5f51de312e9d",
                         HttpMethod.PUT,
-                        request,
+                        requisicao,
                         EnderecoResource.class);
 
         assertEquals(HttpStatus.OK, resposta.getStatusCode());
