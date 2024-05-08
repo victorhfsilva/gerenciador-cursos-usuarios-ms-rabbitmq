@@ -1,6 +1,7 @@
 package com.example.usuariosms.model.dto;
 
 import com.example.usuariosms.model.enums.Papel;
+import com.example.usuariosms.validators.ValidPassword;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -24,6 +25,7 @@ public record UsuarioRequest(
 
     @NotBlank
     @Size(max = 30)
+    @ValidPassword
     String senha,
 
     @NotNull

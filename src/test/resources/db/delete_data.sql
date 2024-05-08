@@ -1,0 +1,7 @@
+DELETE FROM alunos WHERE EXISTS (SELECT 1 FROM alunos);
+
+DELETE FROM professores WHERE EXISTS (SELECT 1 FROM professores);
+
+DELETE FROM usuarios WHERE EXISTS (SELECT 1 FROM usuarios);
+
+DELETE FROM enderecos WHERE EXISTS (SELECT 1 FROM enderecos);
