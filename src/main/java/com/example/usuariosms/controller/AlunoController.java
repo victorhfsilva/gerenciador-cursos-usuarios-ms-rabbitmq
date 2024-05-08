@@ -3,6 +3,7 @@ package com.example.usuariosms.controller;
 import com.example.usuariosms.model.dto.AlunoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
 import com.example.usuariosms.service.impl.AlunoService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,13 +45,13 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity<EntityModel<AlunoResource>> registrarAluno(@RequestBody AlunoRequest alunoDto) {
+    public ResponseEntity<EntityModel<AlunoResource>> registrarAluno(@RequestBody @Valid AlunoRequest alunoDto) {
         AlunoResource alunoResource = alunoService.save(alunoDto);
         return ResponseEntity.created(null).body(EntityModel.of(alunoResource));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EntityModel<AlunoResource>> atualizarAluno(@PathVariable UUID id, @RequestBody AlunoRequest alunoDto) {
+    public ResponseEntity<EntityModel<AlunoResource>> atualizarAluno(@PathVariable UUID id, @RequestBody @Valid AlunoRequest alunoDto) {
         AlunoResource alunoResource = alunoService.update(id, alunoDto);
         return ResponseEntity.ok().body(EntityModel.of(alunoResource));
     }

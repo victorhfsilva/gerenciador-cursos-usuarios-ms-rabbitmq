@@ -1,5 +1,6 @@
 package com.example.usuariosms.advicer;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -21,6 +22,12 @@ public class ExceptionHandlerAdvice {
     public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         FieldError fieldError = ex.getBindingResult().getFieldError();
         return ResponseEntity.badRequest().body("O campo " + fieldError.getField() + " é inválido.");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        return ResponseEntity.badRequest().body("Erro de integridade dos dados.");
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
