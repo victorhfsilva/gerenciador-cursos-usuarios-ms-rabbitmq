@@ -1,6 +1,5 @@
 package com.example.usuariosms.fixture;
 
-import com.example.usuariosms.model.Usuario;
 import com.example.usuariosms.model.enums.Papel;
 import com.example.usuariosms.model.resources.UsuarioResource;
 

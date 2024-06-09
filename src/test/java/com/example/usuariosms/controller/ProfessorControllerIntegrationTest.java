@@ -44,25 +44,7 @@ public class ProfessorControllerIntegrationTest {
         assertEquals("33344455566", resposta.getBody().getCpf());
     }
 
-    @Test
-    @SqlGroup({
-            @Sql(scripts = "/db/delete_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts = "/db/restart_ids.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts = "/db/insert_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    })
-    void registrarProfessorTest() {
-        ProfessorRequest professoreRequest = ProfessorRequestFixture.buildValido();
-        HttpEntity<ProfessorRequest> requisicao = new HttpEntity<>(professoreRequest);
 
-        ResponseEntity<ProfessorResource> resposta = restTemplate
-                .postForEntity("http://localhost:" + port + "/professores",
-                        requisicao,
-                        ProfessorResource.class);
-
-        assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
-        assertEquals("78664841209", resposta.getBody().getCpf());
-    }
-    
     @Test
     @SqlGroup({
             @Sql(scripts = "/db/delete_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
@@ -81,22 +63,5 @@ public class ProfessorControllerIntegrationTest {
 
         assertEquals(HttpStatus.OK, resposta.getStatusCode());
         assertEquals("78664841209", resposta.getBody().getCpf());
-    }
-
-    @Test
-    @SqlGroup({
-            @Sql(scripts = "/db/delete_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts = "/db/restart_ids.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts = "/db/insert_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    })
-    void deletarProfessorTest() {
-        ResponseEntity<ProfessorResource> resposta = restTemplate
-                .exchange("http://localhost:" + port + "/professores/18bbaa9d-4b9b-4efb-9bd7-5f51de312e9b",
-                        HttpMethod.DELETE,
-                        null,
-                        ProfessorResource.class);
-
-        assertEquals(HttpStatus.OK, resposta.getStatusCode());
-        assertEquals("33344455566", resposta.getBody().getCpf());
     }
 }

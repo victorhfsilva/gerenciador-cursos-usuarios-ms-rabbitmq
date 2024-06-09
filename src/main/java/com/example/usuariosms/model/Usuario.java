@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -33,7 +32,7 @@ public class Usuario {
     @Column(nullable = false, unique = true, length = 11)
     private String cpf;
 
-    @Column(nullable = false, length = 500)
+    @Column(nullable = false, length = 30)
     private String senha;
 
     @Enumerated(EnumType.STRING)

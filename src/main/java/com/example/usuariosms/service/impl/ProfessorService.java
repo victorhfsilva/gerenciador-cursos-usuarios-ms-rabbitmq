@@ -7,7 +7,6 @@ import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
 import com.example.usuariosms.mapper.ProfessorProfessorRequestMapper;
 import com.example.usuariosms.mapper.ProfessorProfessorResourceMapper;
 import com.example.usuariosms.model.Professor;
-import com.example.usuariosms.model.dtos.AlunoClientDto;
 import com.example.usuariosms.model.dtos.ProfessorClientDto;
 import com.example.usuariosms.model.requests.ProfessorRequest;
 import com.example.usuariosms.model.resources.ProfessorResource;
