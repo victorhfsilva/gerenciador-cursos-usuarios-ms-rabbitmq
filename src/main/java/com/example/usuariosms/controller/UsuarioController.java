@@ -1,6 +1,6 @@
 package com.example.usuariosms.controller;
 
-import com.example.usuariosms.model.dto.UsuarioRequest;
+import com.example.usuariosms.model.requests.UsuarioRequest;
 import com.example.usuariosms.model.resources.UsuarioResource;
 import com.example.usuariosms.service.IUsuarioService;
 import jakarta.validation.Valid;
@@ -29,6 +29,12 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<EntityModel<UsuarioResource>> buscarUsuarioPorId(@PathVariable UUID id) {
         UsuarioResource usuarioResource = usuarioService.findById(id);
+        return ResponseEntity.ok().body(EntityModel.of(usuarioResource));
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<EntityModel<UsuarioResource>> buscarUsuarioPorCpf(@PathVariable String cpf) {
+        UsuarioResource usuarioResource = usuarioService.findByCpf(cpf);
         return ResponseEntity.ok().body(EntityModel.of(usuarioResource));
     }
 

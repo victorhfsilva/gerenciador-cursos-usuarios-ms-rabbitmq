@@ -1,4 +1,4 @@
-package com.example.usuariosms.model.dto;
+package com.example.usuariosms.model.requests;
 
 import com.example.usuariosms.model.enums.Papel;
 import com.example.usuariosms.validators.ValidPassword;

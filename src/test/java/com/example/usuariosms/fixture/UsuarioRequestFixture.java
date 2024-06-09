@@ -1,6 +1,6 @@
 package com.example.usuariosms.fixture;
 
-import com.example.usuariosms.model.dto.UsuarioRequest;
+import com.example.usuariosms.model.requests.UsuarioRequest;
 import com.example.usuariosms.model.enums.Papel;
 
 import java.time.LocalDate;

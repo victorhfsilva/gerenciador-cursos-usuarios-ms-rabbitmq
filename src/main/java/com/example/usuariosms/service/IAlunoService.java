@@ -1,6 +1,6 @@
 package com.example.usuariosms.service;
 
-import com.example.usuariosms.model.dto.AlunoRequest;
+import com.example.usuariosms.model.requests.AlunoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

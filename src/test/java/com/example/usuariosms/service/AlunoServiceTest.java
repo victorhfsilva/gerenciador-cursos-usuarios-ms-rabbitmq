@@ -1,5 +1,6 @@
 package com.example.usuariosms.service;
 
+import com.example.usuariosms.client.CursoClient;
 import com.example.usuariosms.fixture.AlunoFixture;
 import com.example.usuariosms.fixture.AlunoRequestFixture;
 import com.example.usuariosms.fixture.AlunoResourceFixture;
@@ -7,8 +8,9 @@ import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
 import com.example.usuariosms.mapper.AlunoAlunoRequestMapper;
 import com.example.usuariosms.mapper.AlunoAlunoResourceMapper;
 import com.example.usuariosms.model.Aluno;
-import com.example.usuariosms.model.dto.AlunoRequest;
-import com.example.usuariosms.model.dto.EnderecoRequest;
+import com.example.usuariosms.model.dtos.AlunoClientDto;
+import com.example.usuariosms.model.requests.AlunoRequest;
+import com.example.usuariosms.model.requests.EnderecoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
 import com.example.usuariosms.repository.AlunoRepository;
 import com.example.usuariosms.service.impl.AlunoService;
@@ -43,7 +45,8 @@ public class AlunoServiceTest {
     private AlunoAlunoRequestMapper alunoAlunoRequestMapper;
     @Mock
     private EnderecoEnderecoRequestMapper enderecoEnderecoRequestMapper;
-
+    @Mock
+    private CursoClient cursoClient;
     @Test
     void saveTest(){
         AlunoRequest alunoRequest = AlunoRequestFixture.buildValido();
@@ -52,6 +55,7 @@ public class AlunoServiceTest {
         when(alunoAlunoRequestMapper.alunoRequestToAluno(alunoRequest)).thenReturn(aluno);
         when(alunoRepository.save(any(Aluno.class))).thenReturn(aluno);
         when(alunoAlunoResourceMapper.alunoToAlunoResource(aluno)).thenReturn(AlunoResourceFixture.buildValido());
+        when(cursoClient.registrarAluno(any(AlunoClientDto.class))).thenReturn(AlunoClientDto.builder().usuarioId(aluno.getId()).build());
 
         AlunoResource alunoResource = alunoService.save(alunoRequest);
 
@@ -119,6 +123,7 @@ public class AlunoServiceTest {
 
         when(alunoRepository.findById(any(UUID.class))).thenReturn(Optional.of(aluno));
         when(alunoAlunoResourceMapper.alunoToAlunoResource(aluno)).thenReturn(alunoResource);
+        when(cursoClient.deletarAluno(any(UUID.class))).thenReturn(AlunoClientDto.builder().usuarioId(aluno.getId()).build());
 
         AlunoResource alunoRetornado = alunoService.delete(UUID.randomUUID());
 

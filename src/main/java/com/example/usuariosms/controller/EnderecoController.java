@@ -1,6 +1,6 @@
 package com.example.usuariosms.controller;
 
-import com.example.usuariosms.model.dto.EnderecoRequest;
+import com.example.usuariosms.model.requests.EnderecoRequest;
 import com.example.usuariosms.model.resources.EnderecoResource;
 import com.example.usuariosms.service.IEnderecoService;
 import jakarta.validation.Valid;

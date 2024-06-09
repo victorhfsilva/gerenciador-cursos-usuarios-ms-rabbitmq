@@ -1,7 +1,7 @@
 package com.example.usuariosms.controller;
 
 import com.example.usuariosms.fixture.AlunoRequestFixture;
-import com.example.usuariosms.model.dto.AlunoRequest;
+import com.example.usuariosms.model.requests.AlunoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

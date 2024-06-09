@@ -1,5 +1,6 @@
 package com.example.usuariosms.service;
 
+import com.example.usuariosms.client.CursoClient;
 import com.example.usuariosms.fixture.ProfessorFixture;
 import com.example.usuariosms.fixture.ProfessorRequestFixture;
 import com.example.usuariosms.fixture.ProfessorResourceFixture;
@@ -7,8 +8,9 @@ import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
 import com.example.usuariosms.mapper.ProfessorProfessorRequestMapper;
 import com.example.usuariosms.mapper.ProfessorProfessorResourceMapper;
 import com.example.usuariosms.model.Professor;
-import com.example.usuariosms.model.dto.EnderecoRequest;
-import com.example.usuariosms.model.dto.ProfessorRequest;
+import com.example.usuariosms.model.dtos.ProfessorClientDto;
+import com.example.usuariosms.model.requests.EnderecoRequest;
+import com.example.usuariosms.model.requests.ProfessorRequest;
 import com.example.usuariosms.model.resources.ProfessorResource;
 import com.example.usuariosms.repository.ProfessorRepository;
 import com.example.usuariosms.service.impl.ProfessorService;
@@ -45,6 +47,9 @@ public class ProfessorServiceTest {
     @Mock
     private EnderecoEnderecoRequestMapper enderecoEnderecoRequestMapper;
 
+    @Mock
+    private CursoClient cursoClient;
+
     @Test
     void saveTest(){
         ProfessorRequest professorRequest = ProfessorRequestFixture.buildValido();
@@ -53,6 +58,7 @@ public class ProfessorServiceTest {
         when(professorProfessorRequestMapper.professorRequestToProfessor(professorRequest)).thenReturn(professor);
         when(professorRepository.save(any(Professor.class))).thenReturn(professor);
         when(professorProfessorResourceMapper.professorToProfessorResource(professor)).thenReturn(ProfessorResourceFixture.buildValido());
+        when(cursoClient.registrarProfessor(any(ProfessorClientDto.class))).thenReturn(ProfessorClientDto.builder().usuarioId(professor.getId()).build());
 
         ProfessorResource professorResource = professorService.save(professorRequest);
 
@@ -120,6 +126,7 @@ public class ProfessorServiceTest {
 
         when(professorRepository.findById(any(UUID.class))).thenReturn(Optional.of(professor));
         when(professorProfessorResourceMapper.professorToProfessorResource(professor)).thenReturn(professorResource);
+        when(cursoClient.deletarProfessor(any(UUID.class))).thenReturn(ProfessorClientDto.builder().usuarioId(professor.getId()).build());
 
         ProfessorResource professorRetornado = professorService.delete(UUID.randomUUID());
 

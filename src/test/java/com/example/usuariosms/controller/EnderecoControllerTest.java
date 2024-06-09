@@ -2,11 +2,9 @@ package com.example.usuariosms.controller;
 
 import com.example.usuariosms.fixture.EnderecoRequestFixture;
 import com.example.usuariosms.fixture.EnderecoResourceFixture;
-import com.example.usuariosms.model.dto.EnderecoRequest;
+import com.example.usuariosms.model.requests.EnderecoRequest;
 import com.example.usuariosms.model.resources.EnderecoResource;
 import com.example.usuariosms.service.impl.EnderecoService;
-import com.example.usuariosms.service.impl.UsuarioService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

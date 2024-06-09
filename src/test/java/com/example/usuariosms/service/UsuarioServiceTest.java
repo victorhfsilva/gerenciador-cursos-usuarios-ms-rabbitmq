@@ -7,7 +7,7 @@ import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
 import com.example.usuariosms.mapper.UsuarioUsuarioRequestMapper;
 import com.example.usuariosms.mapper.UsuarioUsuarioResourceMapper;
 import com.example.usuariosms.model.Usuario;
-import com.example.usuariosms.model.dto.UsuarioRequest;
+import com.example.usuariosms.model.requests.UsuarioRequest;
 import com.example.usuariosms.model.resources.UsuarioResource;
 import com.example.usuariosms.repository.UsuarioRepository;
 import com.example.usuariosms.service.impl.UsuarioService;
@@ -64,6 +64,20 @@ class UsuarioServiceTest {
         when(usuarioRepository.findById(any())).thenReturn(Optional.of(usuario));
         when(usuarioUsuarioResourceMapper.usuarioToUsuarioResource(usuario)).thenReturn(usuarioResource);
         UsuarioResource usuarioRetornado = usuarioService.findById(UUID.randomUUID());
+
+        assertEquals(usuario.getCpf(), usuarioRetornado.getCpf());
+        assertNotNull(usuarioRetornado.getLink("self"));
+        assertNotNull(usuarioRetornado.getLink("endereco"));
+    }
+
+    @Test
+    void findByCpfTest() {
+        Usuario usuario = UsuarioFixture.buildValido();
+        UsuarioResource usuarioResource = UsuarioResourceFixture.buildValido();
+
+        when(usuarioRepository.findByCpf(any())).thenReturn(Optional.of(usuario));
+        when(usuarioUsuarioResourceMapper.usuarioToUsuarioResource(usuario)).thenReturn(usuarioResource);
+        UsuarioResource usuarioRetornado = usuarioService.findByCpf(usuario.getCpf());
 
         assertEquals(usuario.getCpf(), usuarioRetornado.getCpf());
         assertNotNull(usuarioRetornado.getLink("self"));

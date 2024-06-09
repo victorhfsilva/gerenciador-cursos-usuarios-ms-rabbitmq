@@ -2,7 +2,7 @@ package com.example.usuariosms.controller;
 
 import com.example.usuariosms.fixture.AlunoRequestFixture;
 import com.example.usuariosms.fixture.AlunoResourceFixture;
-import com.example.usuariosms.model.dto.AlunoRequest;
+import com.example.usuariosms.model.requests.AlunoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
 import com.example.usuariosms.service.impl.AlunoService;
 import com.fasterxml.jackson.databind.ObjectMapper;

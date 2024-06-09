@@ -1,7 +1,7 @@
 package com.example.usuariosms.controller;
 
 import com.example.usuariosms.fixture.UsuarioRequestFixture;
-import com.example.usuariosms.model.dto.UsuarioRequest;
+import com.example.usuariosms.model.requests.UsuarioRequest;
 import com.example.usuariosms.model.resources.UsuarioResource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +38,21 @@ public class UsuarioControllerIntegrationTest {
     void buscarUsuarioPorIdTest() {
         ResponseEntity<UsuarioResource> resposta = restTemplate
                 .getForEntity("http://localhost:" + port + "/usuarios/38bbaa9d-4b9b-4efb-9bd7-5f51de312e9d",
+                        UsuarioResource.class);
+
+        assertEquals(HttpStatus.OK, resposta.getStatusCode());
+        assertEquals("43146612674", resposta.getBody().getCpf());
+    }
+
+    @Test
+    @SqlGroup({
+            @Sql(scripts = "/db/delete_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts = "/db/restart_ids.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts = "/db/insert_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    })
+    void buscarUsuarioPorCpfTest() {
+        ResponseEntity<UsuarioResource> resposta = restTemplate
+                .getForEntity("http://localhost:" + port + "/usuarios/cpf/43146612674",
                         UsuarioResource.class);
 
         assertEquals(HttpStatus.OK, resposta.getStatusCode());

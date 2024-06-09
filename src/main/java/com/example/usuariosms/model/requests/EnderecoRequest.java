@@ -1,4 +1,4 @@
-package com.example.usuariosms.model.dto;
+package com.example.usuariosms.model.requests;
 
 import com.example.usuariosms.model.enums.Estado;
 import jakarta.validation.constraints.NotBlank;

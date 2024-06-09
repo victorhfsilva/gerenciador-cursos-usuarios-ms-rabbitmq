@@ -1,21 +1,17 @@
 package com.example.usuariosms.controller;
 
-import com.example.usuariosms.model.dto.AlunoRequest;
+import com.example.usuariosms.model.requests.AlunoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
-import com.example.usuariosms.service.impl.AlunoService;
+import com.example.usuariosms.service.IAlunoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
 import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -26,8 +22,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @AllArgsConstructor
 public class AlunoController {
 
-    private AlunoService alunoService;
+    private IAlunoService alunoService;
     private PagedResourcesAssembler<AlunoResource> pagedResourcesAssembler;
+
     @GetMapping("/{id}")
     public ResponseEntity<EntityModel<AlunoResource>> buscarAlunoPorId(@PathVariable UUID id) {
         AlunoResource alunoResource = alunoService.findById(id);

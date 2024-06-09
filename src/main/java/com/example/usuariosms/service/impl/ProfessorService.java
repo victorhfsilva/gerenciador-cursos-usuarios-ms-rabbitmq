@@ -1,12 +1,15 @@
 package com.example.usuariosms.service.impl;
 
+import com.example.usuariosms.client.CursoClient;
 import com.example.usuariosms.controller.EnderecoController;
 import com.example.usuariosms.controller.ProfessorController;
 import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
 import com.example.usuariosms.mapper.ProfessorProfessorRequestMapper;
 import com.example.usuariosms.mapper.ProfessorProfessorResourceMapper;
 import com.example.usuariosms.model.Professor;
-import com.example.usuariosms.model.dto.ProfessorRequest;
+import com.example.usuariosms.model.dtos.AlunoClientDto;
+import com.example.usuariosms.model.dtos.ProfessorClientDto;
+import com.example.usuariosms.model.requests.ProfessorRequest;
 import com.example.usuariosms.model.resources.ProfessorResource;
 import com.example.usuariosms.repository.ProfessorRepository;
 import com.example.usuariosms.service.IProfessorService;
@@ -28,12 +31,14 @@ public class ProfessorService implements IProfessorService {
     private ProfessorProfessorRequestMapper professorProfessorRequestMapper;
     private ProfessorProfessorResourceMapper professorProfessorResourceMapper;
     private EnderecoEnderecoRequestMapper enderecoEnderecoRequestMapper;
+    private CursoClient cursoClient;
 
     @Transactional
     public ProfessorResource save(ProfessorRequest professorDto) {
         Professor professor = professorProfessorRequestMapper.professorRequestToProfessor(professorDto);
 
         Professor professorSalvo = professorRepository.save(professor);
+        cursoClient.registrarProfessor(ProfessorClientDto.builder().usuarioId(professorSalvo.getId()).build());
 
         ProfessorResource professorResource = professorProfessorResourceMapper.professorToProfessorResource(professorSalvo);
 
@@ -88,6 +93,7 @@ public class ProfessorService implements IProfessorService {
         Professor professor = professorRepository.findById(id).orElseThrow();
 
         professorRepository.delete(professor);
+        cursoClient.deletarProfessor(professor.getId());
 
         ProfessorResource professorResource = professorProfessorResourceMapper.professorToProfessorResource(professor);
 

@@ -8,7 +8,7 @@ import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
 import com.example.usuariosms.mapper.EnderecoEnderecoResourceMapper;
 import com.example.usuariosms.model.Endereco;
 import com.example.usuariosms.model.Usuario;
-import com.example.usuariosms.model.dto.EnderecoRequest;
+import com.example.usuariosms.model.requests.EnderecoRequest;
 import com.example.usuariosms.model.resources.EnderecoResource;
 import com.example.usuariosms.repository.UsuarioRepository;
 import com.example.usuariosms.service.impl.EnderecoService;

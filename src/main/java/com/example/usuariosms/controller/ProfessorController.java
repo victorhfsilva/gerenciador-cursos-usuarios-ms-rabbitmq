@@ -1,8 +1,8 @@
 package com.example.usuariosms.controller;
 
-import com.example.usuariosms.model.dto.ProfessorRequest;
+import com.example.usuariosms.model.requests.ProfessorRequest;
 import com.example.usuariosms.model.resources.ProfessorResource;
-import com.example.usuariosms.service.impl.ProfessorService;
+import com.example.usuariosms.service.IProfessorService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @AllArgsConstructor
 public class ProfessorController {
 
-    private ProfessorService professorService;
+    private IProfessorService professorService;
     private PagedResourcesAssembler<ProfessorResource> pagedResourcesAssembler;
 
     @GetMapping("/{id}")

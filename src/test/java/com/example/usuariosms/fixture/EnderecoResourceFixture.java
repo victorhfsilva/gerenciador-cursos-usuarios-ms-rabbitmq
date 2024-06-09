@@ -1,6 +1,5 @@
 package com.example.usuariosms.fixture;
 
-import com.example.usuariosms.model.dto.EnderecoRequest;
 import com.example.usuariosms.model.enums.Estado;
 import com.example.usuariosms.model.resources.EnderecoResource;
 

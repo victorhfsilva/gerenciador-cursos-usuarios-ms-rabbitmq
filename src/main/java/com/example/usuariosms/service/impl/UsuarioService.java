@@ -6,7 +6,7 @@ import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
 import com.example.usuariosms.mapper.UsuarioUsuarioRequestMapper;
 import com.example.usuariosms.mapper.UsuarioUsuarioResourceMapper;
 import com.example.usuariosms.model.Usuario;
-import com.example.usuariosms.model.dto.UsuarioRequest;
+import com.example.usuariosms.model.requests.UsuarioRequest;
 import com.example.usuariosms.model.resources.UsuarioResource;
 import com.example.usuariosms.repository.UsuarioRepository;
 import com.example.usuariosms.service.IUsuarioService;
@@ -49,6 +49,18 @@ public class UsuarioService implements IUsuarioService {
 
         usuarioResource.add(linkTo(methodOn(UsuarioController.class).buscarUsuarioPorId(id)).withSelfRel());
         usuarioResource.add(linkTo(methodOn(EnderecoController.class).buscarEnderecosPorUsuarioId(id)).withRel("endereco"));
+
+        return usuarioResource;
+    }
+
+    @Override
+    public UsuarioResource findByCpf(String cpf) {
+        Usuario usuario = usuarioRepository.findByCpf(cpf).orElseThrow();
+
+        UsuarioResource usuarioResource = usuarioUsuarioResourceMapper.usuarioToUsuarioResource(usuario);
+
+        usuarioResource.add(linkTo(methodOn(UsuarioController.class).buscarUsuarioPorCpf(cpf)).withSelfRel());
+        usuarioResource.add(linkTo(methodOn(EnderecoController.class).buscarEnderecosPorUsuarioId(usuario.getId())).withRel("endereco"));
 
         return usuarioResource;
     }

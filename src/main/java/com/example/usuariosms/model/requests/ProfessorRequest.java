@@ -1,4 +1,4 @@
-package com.example.usuariosms.model.dto;
+package com.example.usuariosms.model.requests;
 
 import com.example.usuariosms.model.enums.Papel;
 import com.example.usuariosms.validators.ValidPassword;
@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import java.time.LocalDate;
 
 @Builder
-public record AlunoRequest (
+public record ProfessorRequest(
         @NotBlank
         @Size(max = 100)
         String nome,
@@ -45,8 +45,19 @@ public record AlunoRequest (
         EnderecoRequest endereco,
 
         @NotBlank
-        @Size(max = 16)
-        String idEstudantil
+        @Size(max = 10)
+        String numeroCTPS,
+
+        @NotBlank
+        @Size(max = 10)
+        String serieCTPS,
+
+        @NotBlank
+        @Size(max = 11)
+        String numeroPIS,
+
+        @NotNull
+        Double remuneracao
 ){
 
 }

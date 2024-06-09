@@ -1,6 +1,6 @@
 package com.example.usuariosms.service;
 
-import com.example.usuariosms.model.dto.EnderecoRequest;
+import com.example.usuariosms.model.requests.EnderecoRequest;
 import com.example.usuariosms.model.resources.EnderecoResource;
 
 import java.util.UUID;

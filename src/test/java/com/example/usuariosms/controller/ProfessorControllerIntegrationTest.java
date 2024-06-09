@@ -1,7 +1,7 @@
 package com.example.usuariosms.controller;
 
 import com.example.usuariosms.fixture.ProfessorRequestFixture;
-import com.example.usuariosms.model.dto.ProfessorRequest;
+import com.example.usuariosms.model.requests.ProfessorRequest;
 import com.example.usuariosms.model.resources.ProfessorResource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

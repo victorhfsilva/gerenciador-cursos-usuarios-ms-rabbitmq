@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
 @NoArgsConstructor

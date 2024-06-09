@@ -1,12 +1,14 @@
 package com.example.usuariosms.service.impl;
 
+import com.example.usuariosms.client.CursoClient;
 import com.example.usuariosms.controller.EnderecoController;
 import com.example.usuariosms.controller.AlunoController;
 import com.example.usuariosms.mapper.EnderecoEnderecoRequestMapper;
 import com.example.usuariosms.mapper.AlunoAlunoRequestMapper;
 import com.example.usuariosms.mapper.AlunoAlunoResourceMapper;
 import com.example.usuariosms.model.Aluno;
-import com.example.usuariosms.model.dto.AlunoRequest;
+import com.example.usuariosms.model.dtos.AlunoClientDto;
+import com.example.usuariosms.model.requests.AlunoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
 import com.example.usuariosms.repository.AlunoRepository;
 import com.example.usuariosms.service.IAlunoService;
@@ -28,12 +30,14 @@ public class AlunoService implements IAlunoService {
     private AlunoAlunoRequestMapper alunoAlunoRequestMapper;
     private AlunoAlunoResourceMapper alunoAlunoResourceMapper;
     private EnderecoEnderecoRequestMapper enderecoEnderecoRequestMapper;
+    private CursoClient cursoClient;
 
     @Transactional
     public AlunoResource save(AlunoRequest alunoDto) {
         Aluno aluno = alunoAlunoRequestMapper.alunoRequestToAluno(alunoDto);
 
         Aluno alunoSalvo = alunoRepository.save(aluno);
+        cursoClient.registrarAluno(AlunoClientDto.builder().usuarioId(alunoSalvo.getId()).build());
 
         AlunoResource alunoResource = alunoAlunoResourceMapper.alunoToAlunoResource(alunoSalvo);
 
@@ -88,6 +92,7 @@ public class AlunoService implements IAlunoService {
         Aluno aluno = alunoRepository.findById(id).orElseThrow();
 
         alunoRepository.delete(aluno);
+        cursoClient.deletarAluno(aluno.getId());
 
         AlunoResource alunoResource = alunoAlunoResourceMapper.alunoToAlunoResource(aluno);
 

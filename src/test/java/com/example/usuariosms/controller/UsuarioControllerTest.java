@@ -1,13 +1,10 @@
 package com.example.usuariosms.controller;
 
-import com.example.usuariosms.fixture.UsuarioFixture;
 import com.example.usuariosms.fixture.UsuarioRequestFixture;
 import com.example.usuariosms.fixture.UsuarioResourceFixture;
-import com.example.usuariosms.model.Usuario;
-import com.example.usuariosms.model.dto.UsuarioRequest;
+import com.example.usuariosms.model.requests.UsuarioRequest;
 import com.example.usuariosms.model.resources.UsuarioResource;
 import com.example.usuariosms.service.impl.UsuarioService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +58,23 @@ public class UsuarioControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.celular").value(usuarioResource.getCelular()));
     }
 
+    @Test
+    void buscarUsuarioPorCpfTest() throws Exception {
+        UsuarioResource usuarioResource = UsuarioResourceFixture.buildValido();
+
+        when(usuarioService.findByCpf(any(String.class))).thenReturn(usuarioResource);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/usuarios/cpf/{cpf}", "43146612674"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(usuarioResource.getId().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value(usuarioResource.getNome()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.sobrenome").value(usuarioResource.getSobrenome()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value(usuarioResource.getCpf()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.papel").value(usuarioResource.getPapel().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dataNascimento").value(usuarioResource.getDataNascimento().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(usuarioResource.getEmail()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.celular").value(usuarioResource.getCelular()));
+    }
     @Test
     void buscarTodosUsuariosTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
