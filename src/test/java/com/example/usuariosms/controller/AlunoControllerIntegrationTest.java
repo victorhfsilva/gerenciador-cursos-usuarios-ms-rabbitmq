@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class AlunoControllerIntegrationTest {
+class AlunoControllerIntegrationTest {
 
     @LocalServerPort
     private int port;

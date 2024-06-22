@@ -12,6 +12,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class UsuarioResource extends RepresentationModel<UsuarioResource> {
     private UUID id;
     private String nome;

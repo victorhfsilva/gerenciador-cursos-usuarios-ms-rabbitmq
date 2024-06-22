@@ -11,6 +11,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class ProfessorResource extends RepresentationModel<ProfessorResource> {
     private UUID id;
     private String nome;

@@ -4,7 +4,7 @@ import com.example.usuariosms.fixture.ProfessorRequestFixture;
 import com.example.usuariosms.fixture.ProfessorResourceFixture;
 import com.example.usuariosms.model.requests.ProfessorRequest;
 import com.example.usuariosms.model.resources.ProfessorResource;
-import com.example.usuariosms.service.impl.ProfessorService;
+import com.example.usuariosms.service.impl.ProfessorServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +29,12 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class ProfessorControllerTest {
+class ProfessorControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ProfessorService professorService;
+    private ProfessorServiceImpl professorServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -43,7 +43,7 @@ public class ProfessorControllerTest {
     void buscarProfessorPorIdTest() throws Exception {
         ProfessorResource professorResource = ProfessorResourceFixture.buildValido();
 
-        when(professorService.findById(any(UUID.class))).thenReturn(professorResource);
+        when(professorServiceImpl.findById(any(UUID.class))).thenReturn(professorResource);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/professores/{id}", UUID.randomUUID()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -68,7 +68,7 @@ public class ProfessorControllerTest {
         List<ProfessorResource> professorResources = List.of(ProfessorResourceFixture.buildValido());
         Page<ProfessorResource> paginaProfessorResources = new PageImpl<>(professorResources, pageable, professorResources.size());
 
-        when(professorService.findAll(any(Pageable.class))).thenReturn(paginaProfessorResources);
+        when(professorServiceImpl.findAll(any(Pageable.class))).thenReturn(paginaProfessorResources);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/professores"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -94,7 +94,7 @@ public class ProfessorControllerTest {
 
         String professorRequestJson =  objectMapper.writeValueAsString(professorRequest);
 
-        when(professorService.save(any(ProfessorRequest.class))).thenReturn(professorResource);
+        when(professorServiceImpl.save(any(ProfessorRequest.class))).thenReturn(professorResource);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/professores")
                         .contentType("application/json")
@@ -121,7 +121,7 @@ public class ProfessorControllerTest {
 
         String professorRequestJson =  objectMapper.writeValueAsString(professorRequest);
 
-        when(professorService.update(any(UUID.class), any(ProfessorRequest.class))).thenReturn(professorResource);
+        when(professorServiceImpl.update(any(UUID.class), any(ProfessorRequest.class))).thenReturn(professorResource);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/professores/{id}", UUID.randomUUID())
                         .contentType("application/json")
@@ -145,7 +145,7 @@ public class ProfessorControllerTest {
     void deletarProfessorTest() throws Exception {
         ProfessorResource professorResource = ProfessorResourceFixture.buildValido();
 
-        when(professorService.delete(any(UUID.class))).thenReturn(professorResource);
+        when(professorServiceImpl.delete(any(UUID.class))).thenReturn(professorResource);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/professores/{id}", UUID.randomUUID()))
                 .andExpect(MockMvcResultMatchers.status().isOk())

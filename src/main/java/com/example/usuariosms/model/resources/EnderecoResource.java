@@ -9,6 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class EnderecoResource extends RepresentationModel<UsuarioResource> {
     private String cep;
     private String numero;

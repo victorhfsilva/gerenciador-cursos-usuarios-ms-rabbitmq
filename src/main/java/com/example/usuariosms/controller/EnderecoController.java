@@ -2,7 +2,7 @@ package com.example.usuariosms.controller;
 
 import com.example.usuariosms.model.requests.EnderecoRequest;
 import com.example.usuariosms.model.resources.EnderecoResource;
-import com.example.usuariosms.service.IEnderecoService;
+import com.example.usuariosms.service.EnderecoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.EntityModel;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class EnderecoController {
 
-    private IEnderecoService enderecoService;
+    private EnderecoService enderecoService;
 
     @GetMapping("/{usuarioId}")
     public EntityModel<EnderecoResource> buscarEnderecosPorUsuarioId(@PathVariable UUID usuarioId) {

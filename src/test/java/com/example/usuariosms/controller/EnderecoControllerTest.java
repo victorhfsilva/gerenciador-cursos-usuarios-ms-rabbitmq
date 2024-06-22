@@ -4,7 +4,7 @@ import com.example.usuariosms.fixture.EnderecoRequestFixture;
 import com.example.usuariosms.fixture.EnderecoResourceFixture;
 import com.example.usuariosms.model.requests.EnderecoRequest;
 import com.example.usuariosms.model.resources.EnderecoResource;
-import com.example.usuariosms.service.impl.EnderecoService;
+import com.example.usuariosms.service.impl.EnderecoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,13 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class EnderecoControllerTest {
+class EnderecoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private EnderecoService enderecoService;
+    private EnderecoServiceImpl enderecoServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -40,7 +40,7 @@ public class EnderecoControllerTest {
 
         EnderecoResource enderecoResource = EnderecoResourceFixture.buildValido();
 
-        when(enderecoService.findByUsuarioId(any(UUID.class))).thenReturn(enderecoResource);
+        when(enderecoServiceImpl.findByUsuarioId(any(UUID.class))).thenReturn(enderecoResource);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/enderecos/{usuarioId}", UUID.randomUUID()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -60,7 +60,7 @@ public class EnderecoControllerTest {
         EnderecoResource enderecoResource = EnderecoResourceFixture.buildValido();
         EnderecoRequest enderecoRequest = EnderecoRequestFixture.buildValido();
 
-        when(enderecoService.update(any(UUID.class), any(EnderecoRequest.class))).thenReturn(enderecoResource);
+        when(enderecoServiceImpl.update(any(UUID.class), any(EnderecoRequest.class))).thenReturn(enderecoResource);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/enderecos/{usuarioId}", UUID.randomUUID())
                         .contentType("application/json")

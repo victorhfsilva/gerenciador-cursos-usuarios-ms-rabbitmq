@@ -4,7 +4,7 @@ import com.example.usuariosms.fixture.AlunoRequestFixture;
 import com.example.usuariosms.fixture.AlunoResourceFixture;
 import com.example.usuariosms.model.requests.AlunoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
-import com.example.usuariosms.service.impl.AlunoService;
+import com.example.usuariosms.service.impl.AlunoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,13 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class AlunoControllerTest {
+class AlunoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private AlunoService alunoService;
+    private AlunoServiceImpl alunoServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -44,7 +44,7 @@ public class AlunoControllerTest {
     void buscarAlunoPorIdTest() throws Exception {
         AlunoResource alunoResource = AlunoResourceFixture.buildValido();
 
-        when(alunoService.findById(any(UUID.class))).thenReturn(alunoResource);
+        when(alunoServiceImpl.findById(any(UUID.class))).thenReturn(alunoResource);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/alunos/{id}", UUID.randomUUID()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -65,7 +65,7 @@ public class AlunoControllerTest {
         List<AlunoResource> alunoResources = List.of(AlunoResourceFixture.buildValido());
         Page<AlunoResource> paginaAlunoResources = new PageImpl<>(alunoResources, pageable, alunoResources.size());
 
-        when(alunoService.findAll(any(Pageable.class))).thenReturn(paginaAlunoResources);
+        when(alunoServiceImpl.findAll(any(Pageable.class))).thenReturn(paginaAlunoResources);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/alunos"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -88,7 +88,7 @@ public class AlunoControllerTest {
 
         String alunoRequestJson =  objectMapper.writeValueAsString(alunoRequest);
 
-        when(alunoService.save(any(AlunoRequest.class))).thenReturn(alunoResource);
+        when(alunoServiceImpl.save(any(AlunoRequest.class))).thenReturn(alunoResource);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/alunos")
                         .contentType("application/json")
@@ -112,7 +112,7 @@ public class AlunoControllerTest {
 
         String alunoRequestJson =  objectMapper.writeValueAsString(alunoRequest);
 
-        when(alunoService.update(any(UUID.class), any(AlunoRequest.class))).thenReturn(alunoResource);
+        when(alunoServiceImpl.update(any(UUID.class), any(AlunoRequest.class))).thenReturn(alunoResource);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/alunos/{id}", UUID.randomUUID())
                         .contentType("application/json")
@@ -133,7 +133,7 @@ public class AlunoControllerTest {
     void deletarAlunoTest() throws Exception {
         AlunoResource alunoResource = AlunoResourceFixture.buildValido();
 
-        when(alunoService.delete(any(UUID.class))).thenReturn(alunoResource);
+        when(alunoServiceImpl.delete(any(UUID.class))).thenReturn(alunoResource);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/alunos/{id}", UUID.randomUUID()))
                 .andExpect(MockMvcResultMatchers.status().isOk())

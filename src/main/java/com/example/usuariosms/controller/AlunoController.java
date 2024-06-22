@@ -2,7 +2,7 @@ package com.example.usuariosms.controller;
 
 import com.example.usuariosms.model.requests.AlunoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
-import com.example.usuariosms.service.IAlunoService;
+import com.example.usuariosms.service.AlunoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @AllArgsConstructor
 public class AlunoController {
 
-    private IAlunoService alunoService;
+    private AlunoService alunoService;
     private PagedResourcesAssembler<AlunoResource> pagedResourcesAssembler;
 
     @GetMapping("/{id}")

@@ -4,7 +4,7 @@ import com.example.usuariosms.fixture.UsuarioRequestFixture;
 import com.example.usuariosms.fixture.UsuarioResourceFixture;
 import com.example.usuariosms.model.requests.UsuarioRequest;
 import com.example.usuariosms.model.resources.UsuarioResource;
-import com.example.usuariosms.service.impl.UsuarioService;
+import com.example.usuariosms.service.impl.UsuarioServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,13 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class UsuarioControllerTest {
+class UsuarioControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private UsuarioService usuarioService;
+    private UsuarioServiceImpl usuarioServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -44,7 +44,7 @@ public class UsuarioControllerTest {
     void buscarUsuarioPorIdTest() throws Exception {
         UsuarioResource usuarioResource = UsuarioResourceFixture.buildValido();
 
-        when(usuarioService.findById(any(UUID.class))).thenReturn(usuarioResource);
+        when(usuarioServiceImpl.findById(any(UUID.class))).thenReturn(usuarioResource);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/usuarios/{id}", UUID.randomUUID()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -62,7 +62,7 @@ public class UsuarioControllerTest {
     void buscarUsuarioPorCpfTest() throws Exception {
         UsuarioResource usuarioResource = UsuarioResourceFixture.buildValido();
 
-        when(usuarioService.findByCpf(any(String.class))).thenReturn(usuarioResource);
+        when(usuarioServiceImpl.findByCpf(any(String.class))).thenReturn(usuarioResource);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/usuarios/cpf/{cpf}", "43146612674"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -81,7 +81,7 @@ public class UsuarioControllerTest {
         List<UsuarioResource> usuarioResources = List.of(UsuarioResourceFixture.buildValido());
         Page<UsuarioResource> paginaUsuarioResources = new PageImpl<>(usuarioResources, pageable, usuarioResources.size());
 
-        when(usuarioService.findAll(any(Pageable.class))).thenReturn(paginaUsuarioResources);
+        when(usuarioServiceImpl.findAll(any(Pageable.class))).thenReturn(paginaUsuarioResources);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/usuarios"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -103,7 +103,7 @@ public class UsuarioControllerTest {
 
         String usuarioRequestJson =  objectMapper.writeValueAsString(usuarioRequest);
 
-        when(usuarioService.save(any(UsuarioRequest.class))).thenReturn(usuarioResource);
+        when(usuarioServiceImpl.save(any(UsuarioRequest.class))).thenReturn(usuarioResource);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")
                         .contentType("application/json")
@@ -126,7 +126,7 @@ public class UsuarioControllerTest {
 
         String usuarioRequestJson =  objectMapper.writeValueAsString(usuarioRequest);
 
-        when(usuarioService.update(any(UUID.class), any(UsuarioRequest.class))).thenReturn(usuarioResource);
+        when(usuarioServiceImpl.update(any(UUID.class), any(UsuarioRequest.class))).thenReturn(usuarioResource);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/usuarios/{id}", UUID.randomUUID())
                         .contentType("application/json")
@@ -146,7 +146,7 @@ public class UsuarioControllerTest {
     void deletarUsuarioTest() throws Exception {
         UsuarioResource usuarioResource = UsuarioResourceFixture.buildValido();
 
-        when(usuarioService.delete(any(UUID.class))).thenReturn(usuarioResource);
+        when(usuarioServiceImpl.delete(any(UUID.class))).thenReturn(usuarioResource);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/usuarios/{id}", UUID.randomUUID()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
