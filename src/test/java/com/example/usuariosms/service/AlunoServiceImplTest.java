@@ -1,13 +1,11 @@
 package com.example.usuariosms.service;
 
-import com.example.usuariosms.client.CursoClient;
 import com.example.usuariosms.fixture.AlunoFixture;
 import com.example.usuariosms.fixture.AlunoRequestFixture;
 import com.example.usuariosms.fixture.AlunoResourceFixture;
 import com.example.usuariosms.mapper.AlunoMapper;
 import com.example.usuariosms.mapper.EnderecoMapper;
 import com.example.usuariosms.model.Aluno;
-import com.example.usuariosms.model.dtos.AlunoClientDto;
 import com.example.usuariosms.model.requests.AlunoRequest;
 import com.example.usuariosms.model.requests.EnderecoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
@@ -43,7 +41,7 @@ class AlunoServiceImplTest {
     @Mock
     private EnderecoMapper enderecoMapper;
     @Mock
-    private CursoClient cursoClient;
+    private MensagensService mensagensService;
     @Test
     void saveTest(){
         AlunoRequest alunoRequest = AlunoRequestFixture.buildValido();
@@ -52,7 +50,6 @@ class AlunoServiceImplTest {
         when(alunoMapper.map(alunoRequest)).thenReturn(aluno);
         when(alunoRepository.save(any(Aluno.class))).thenReturn(aluno);
         when(alunoMapper.map(aluno)).thenReturn(AlunoResourceFixture.buildValido());
-        when(cursoClient.registrarAluno(any(AlunoClientDto.class))).thenReturn(AlunoClientDto.builder().usuarioId(aluno.getId()).build());
 
         AlunoResource alunoResource = alunoServiceImpl.save(alunoRequest);
 
@@ -120,7 +117,6 @@ class AlunoServiceImplTest {
 
         when(alunoRepository.findById(any(UUID.class))).thenReturn(Optional.of(aluno));
         when(alunoMapper.map(aluno)).thenReturn(alunoResource);
-        when(cursoClient.deletarAluno(any(UUID.class))).thenReturn(AlunoClientDto.builder().usuarioId(aluno.getId()).build());
 
         AlunoResource alunoRetornado = alunoServiceImpl.delete(UUID.randomUUID());
 

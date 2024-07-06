@@ -1,12 +1,12 @@
 package com.example.usuariosms.service.impl;
 
-import com.example.usuariosms.client.CursoClient;
+import com.example.usuariosms.service.MensagensService;
 import com.example.usuariosms.controller.EnderecoController;
 import com.example.usuariosms.controller.AlunoController;
 import com.example.usuariosms.mapper.AlunoMapper;
 import com.example.usuariosms.mapper.EnderecoMapper;
 import com.example.usuariosms.model.Aluno;
-import com.example.usuariosms.model.dtos.AlunoClientDto;
+import com.example.usuariosms.model.dtos.AlunoDto;
 import com.example.usuariosms.model.requests.AlunoRequest;
 import com.example.usuariosms.model.resources.AlunoResource;
 import com.example.usuariosms.repository.AlunoRepository;
@@ -28,14 +28,14 @@ public class AlunoServiceImpl implements AlunoService {
     private AlunoRepository alunoRepository;
     private AlunoMapper alunoMapper;
     private EnderecoMapper enderecoMapper;
-    private CursoClient cursoClient;
+    private MensagensService mensagensService;
 
     @Transactional
     public AlunoResource save(AlunoRequest alunoDto) {
         Aluno aluno = alunoMapper.map(alunoDto);
 
         Aluno alunoSalvo = alunoRepository.save(aluno);
-        cursoClient.registrarAluno(AlunoClientDto.builder().usuarioId(alunoSalvo.getId()).build());
+        mensagensService.registrarAluno(AlunoDto.builder().usuarioId(alunoSalvo.getId()).build());
 
         AlunoResource alunoResource = alunoMapper.map(alunoSalvo);
 
@@ -88,7 +88,7 @@ public class AlunoServiceImpl implements AlunoService {
         Aluno aluno = alunoRepository.findById(id).orElseThrow();
 
         alunoRepository.delete(aluno);
-        cursoClient.deletarAluno(aluno.getId());
+        mensagensService.deletarAluno(aluno.getId());
 
         AlunoResource alunoResource = alunoMapper.map(aluno);
 

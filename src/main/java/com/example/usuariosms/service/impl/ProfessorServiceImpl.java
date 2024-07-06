@@ -1,12 +1,12 @@
 package com.example.usuariosms.service.impl;
 
-import com.example.usuariosms.client.CursoClient;
+import com.example.usuariosms.service.MensagensService;
 import com.example.usuariosms.controller.EnderecoController;
 import com.example.usuariosms.controller.ProfessorController;
 import com.example.usuariosms.mapper.EnderecoMapper;
 import com.example.usuariosms.mapper.ProfessorMapper;
 import com.example.usuariosms.model.Professor;
-import com.example.usuariosms.model.dtos.ProfessorClientDto;
+import com.example.usuariosms.model.dtos.ProfessorDto;
 import com.example.usuariosms.model.requests.ProfessorRequest;
 import com.example.usuariosms.model.resources.ProfessorResource;
 import com.example.usuariosms.repository.ProfessorRepository;
@@ -28,14 +28,14 @@ public class ProfessorServiceImpl implements ProfessorService {
     private ProfessorRepository professorRepository;
     private ProfessorMapper professorMapper;
     private EnderecoMapper enderecoMapper;
-    private CursoClient cursoClient;
+    private MensagensService mensagensService;
 
     @Transactional
     public ProfessorResource save(ProfessorRequest professorDto) {
         Professor professor = professorMapper.map(professorDto);
 
         Professor professorSalvo = professorRepository.save(professor);
-        cursoClient.registrarProfessor(ProfessorClientDto.builder().usuarioId(professorSalvo.getId()).build());
+        mensagensService.registrarProfessor(ProfessorDto.builder().usuarioId(professorSalvo.getId()).build());
 
         ProfessorResource professorResource = professorMapper.map(professorSalvo);
 
@@ -88,7 +88,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         Professor professor = professorRepository.findById(id).orElseThrow();
 
         professorRepository.delete(professor);
-        cursoClient.deletarProfessor(professor.getId());
+        mensagensService.deletarProfessor(professor.getId());
 
         ProfessorResource professorResource = professorMapper.map(professor);
 

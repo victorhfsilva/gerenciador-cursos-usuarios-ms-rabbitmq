@@ -1,13 +1,11 @@
 package com.example.usuariosms.service;
 
-import com.example.usuariosms.client.CursoClient;
 import com.example.usuariosms.fixture.ProfessorFixture;
 import com.example.usuariosms.fixture.ProfessorRequestFixture;
 import com.example.usuariosms.fixture.ProfessorResourceFixture;
 import com.example.usuariosms.mapper.EnderecoMapper;
 import com.example.usuariosms.mapper.ProfessorMapper;
 import com.example.usuariosms.model.Professor;
-import com.example.usuariosms.model.dtos.ProfessorClientDto;
 import com.example.usuariosms.model.requests.EnderecoRequest;
 import com.example.usuariosms.model.requests.ProfessorRequest;
 import com.example.usuariosms.model.resources.ProfessorResource;
@@ -45,7 +43,7 @@ class ProfessorServiceImplTest {
     private EnderecoMapper enderecoMapper;
 
     @Mock
-    private CursoClient cursoClient;
+    private MensagensService mensagensService;
 
     @Test
     void saveTest(){
@@ -55,7 +53,6 @@ class ProfessorServiceImplTest {
         when(professorMapper.map(professorRequest)).thenReturn(professor);
         when(professorRepository.save(any(Professor.class))).thenReturn(professor);
         when(professorMapper.map(professor)).thenReturn(ProfessorResourceFixture.buildValido());
-        when(cursoClient.registrarProfessor(any(ProfessorClientDto.class))).thenReturn(ProfessorClientDto.builder().usuarioId(professor.getId()).build());
 
         ProfessorResource professorResource = professorServiceImpl.save(professorRequest);
 
@@ -122,7 +119,6 @@ class ProfessorServiceImplTest {
 
         when(professorRepository.findById(any(UUID.class))).thenReturn(Optional.of(professor));
         when(professorMapper.map(professor)).thenReturn(professorResource);
-        when(cursoClient.deletarProfessor(any(UUID.class))).thenReturn(ProfessorClientDto.builder().usuarioId(professor.getId()).build());
 
         ProfessorResource professorRetornado = professorServiceImpl.delete(UUID.randomUUID());
 

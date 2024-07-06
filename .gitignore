@@ -37,6 +37,6 @@ out/
 .vscode/
 
 ### Environment ###
-.local.env
-.local.env
 .env
+.env
+.docker.env
